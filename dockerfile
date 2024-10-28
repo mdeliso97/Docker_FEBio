@@ -21,9 +21,11 @@ RUN apt-get update -y && \
     apt-get clean
 
 # Clone the repository and install FEBio Studio
-RUN git clone https://github.com/mdeliso97/Docker_FEBio.git && \
-    chmod +x Docker_FEBio/FEBioStudio_2-7/FEBioStudio_linux-x64_2-7.run && \
-    ./FEBioStudio_linux-x64_2-7.run --mode unattended --prefix /FEBioStudio
+# RUN git clone https://github.com/mdeliso97/Docker_FEBio.git && \
+#     chmod +x Docker_FEBio/FEBioStudio_2-7/FEBioStudio_linux-x64_2-7.run && \
+#     ./FEBioStudio_linux-x64_2-7.run --mode unattended --prefix /FEBioStudio
+
+COPY home/mdeliso97/Downloads/FEBioStudio_2-7/ .
 
 # Add FEBio Studio to the PATH
 ENV PATH="/FEBioStudio/bin/FEBioStudio:${PATH}"
@@ -34,8 +36,8 @@ RUN wget https://registrationcenter-download.intel.com/akdlm/IRC_NAS/e6ff8e9c-ee
     apt update && \
     apt -y install cmake pkg-config build-essential && \
     sed -i 's/decline/accept/g' silent.cfg && \
-    ./install.sh --silent silent.cfg && \
-    rm -rf /l_openvino_toolkit_p_2022.1.110
+    ./install.sh --silent silent.cfg
+    #rm -rf /l_openvino_toolkit_p_2022.1.110
 
 # Setup the working directory
 RUN mkdir /cbuild
